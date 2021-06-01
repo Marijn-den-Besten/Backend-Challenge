@@ -17,7 +17,7 @@ include("resources/inc/Database.php");
 </header>
 
 <body>
-    <div id="container w-100">
+    <div id="container" class="w-100">
         <div class="row">
             <?php
             $lists = getLists();
@@ -28,7 +28,13 @@ include("resources/inc/Database.php");
                     '<div class="card">',
                         '<div class="card-header">',
                             '<div class="row">',
-                                '<a>'.$list['name'].'</a>',
+                                '<div class="col">',
+                                    '<a>'.$list['listname'].'</a>',
+                                '</div>',
+                                '<div class="col">',
+                                    '<button data-id="'.$list['id'].'" class="deletelistbtn btn btn-danger float-right">X</button>',
+                                    '<button data-id="'.$list['id'].'" data-name="'.$list['listname'].'" data-toggle="modal" data-target="#edit-list-modal" class="openeditmodalbtn btn btn-info float-right">Edit</button>',
+                                '</div>',
                             '</div>',
                         '</div>',
                         '<div class="card-body">';
@@ -45,7 +51,7 @@ include("resources/inc/Database.php");
                                 '</div>',
                             '</div>';
                         }
-                    echo
+                        echo
                         '</div>',
                     '</div>',
                 '</div>';
@@ -85,6 +91,37 @@ include("resources/inc/Database.php");
 
         </div>
     </div>
+
+    <div class="modal fade" id="edit-list-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 for="fname">Edit List</h2>
+                </div>
+                <div class="modal-body">
+                    <form id="newlist-form">
+                        <label style="width: 100%;">
+                            New name:
+                            <input type="text" class="form-control" id="editlistname" name="editlistname" placeholder="Name">
+                        </label>
+                            <input type="hidden" id="listID" name="listID" value="">
+                        <!--<label style="width: 100%;">
+                            Duur(minuten):
+                            <input type="number" class="form-control" id="minutes" name="minutes" placeholder="Duur">
+                        </label>-->
+                        <!--<label style="width: 100%;">
+                            Beschrijving:
+                            <textarea type="text" id="cardDescription" class="form-control" name="cardDescription" placeholder="Beschrijving"></textarea>
+                        </label>-->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="editList" class="btn btn-success">Edit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </body>
 
 <footer>&copy; Marijn den Besten</footer>
@@ -105,4 +142,11 @@ include("resources/inc/Database.php");
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 <script src="resources/scripts/script.js"></script>
+
+<script>
+    function fillmodal(id, name) {
+        $('#listID').val(id);
+        $('#editlistname').attr('placeholder',name);
+    }
+</script>
 </html>
