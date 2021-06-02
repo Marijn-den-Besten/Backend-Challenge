@@ -62,7 +62,27 @@ $(document).on('click', '.deletelistbtn', function(){
     })
 });
 
+$(document).on('click', '#addCard', function(){
+    var senddata = { action: "addCard", cardname: $('#cardname').val(), minutes: $('#minutes').val(), cardDescription: $('#cardDescription').val(), listid: $('#listid').val(), status: $('#statusselect option:selected').val()}
+    $.ajax({
+        type: 'POST',
+        url: 'resources/inc/Database.php',
+        data: senddata,
+        dataType: "json",
+        error: function(data){
+            console.log(data)
+        },
+        success: function(data){
+            window.location.reload();
+        }
+    })
+});
+
 $('.openeditmodalbtn').click(function() {
     $('#listID').val($(this).data('id'));
     $('#editlistname').attr('placeholder',($(this).data('name')));
+});
+
+$('.openaddCardmodalbtn').click(function() {
+    $('#listid').val($(this).data('id'));
 });

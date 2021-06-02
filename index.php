@@ -41,12 +41,16 @@ include("resources/inc/Database.php");
                         foreach(getItems($list['id']) as $item) {
                             echo
                             '<div class="row">',
-                                '<div class="card">',
+                                '<div class="card w-100" id="'.$item['id'].'">',
                                     '<div class="card-header">',
-                                        '<a>' . $item['name'] . '</a>',
+                                        '<a>' . $item['cardname'] . '</a>',
                                     '</div>',
                                     '<div class="card-body">',
-                                        '<a>' . $item['name'] . '</a>',
+                                        '<a>' . $item['minutes'] . ' Minutes</a>',
+                                        '<br>',
+                                        '<a>' . $item['description'] . '</a>',
+                                        '<br>',
+                                        '<a>' . getStatusById($item['status'])['statusname'] . '</a>',
                                     '</div>',
                                 '</div>',
                             '</div>';
@@ -54,7 +58,7 @@ include("resources/inc/Database.php");
                             echo
                             '<div class="row">',
                                 '<div class="col">',
-                                    '<button data-toggle="modal" data-target="#add-card-modal" class="btn btn-secondary float-right">&plus;</button>',
+                                    '<button data-id="'.$list['id'].'" data-toggle="modal" data-target="#add-card-modal" class="openaddCardmodalbtn btn btn-secondary float-right">&plus;</button>',
                                 '</div>',
                             '</div>',
                         '</div>',
@@ -101,7 +105,7 @@ include("resources/inc/Database.php");
                             New name:
                             <input type="text" class="form-control" id="editlistname" name="editlistname" placeholder="Name">
                         </label>
-                            <input type="hidden" id="listID" name="listID">
+                            <input type="hidden" id="listID" name="listID" value="">
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -132,6 +136,20 @@ include("resources/inc/Database.php");
                             Description:
                             <textarea type="text" id="cardDescription" class="form-control" name="cardDescription" placeholder="Beschrijving"></textarea>
                         </label>
+
+                        <label style="width: 100%;">
+                            Status:
+                            <select id="statusselect" class="form-control">
+                                <?php
+                                    foreach (getStatuses() as $status) {
+                                        echo
+                                            '<option value="'.$status['id'].'">'.$status['statusname'].'</option>';
+                                    }
+                                ?>
+                            </select>
+                        </label>
+
+                        <input type="hidden" id="listid" name="listid" value="">
                     </form>
                 </div>
                 <div class="modal-footer">
